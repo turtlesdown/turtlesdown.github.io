@@ -1,0 +1,483 @@
+/* Turtles Down
+   One typeface (Newsreader), one accent (shell green), one column. */
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin-opsz-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/newsreader-latin-opsz-italic.woff2") format("woff2");
+}
+
+:root {
+  --paper: #f6f7f4;
+  --ink: #1d2224;
+  --muted: #626b66;
+  --rule: #d9ded9;
+  --accent: #2b6350;
+  --code-bg: #ebeee9;
+
+  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  --measure: 38rem;
+  --date-col: 6.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #15191a;
+    --ink: #e4e8e3;
+    --muted: #98a29b;
+    --rule: #2c3331;
+    --accent: #8cc7ae;
+    --code-bg: #1d2223;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+.page {
+  max-width: calc(var(--measure) + 3rem);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  color: var(--accent);
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+h1 {
+  font-size: 2.25rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 1rem;
+}
+h2 {
+  font-size: 1.5rem;
+  margin: 2.5rem 0 0.75rem;
+}
+h3 {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  margin: 2rem 0 0.5rem;
+}
+p {
+  margin: 0 0 1.25rem;
+}
+
+time {
+  color: var(--muted);
+  font-style: italic;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  padding: 0.25rem 0.75rem;
+  background: var(--paper);
+}
+.skip:focus {
+  top: 1rem;
+}
+
+/* Masthead ---------------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.75rem 0 1.25rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.masthead__turtles {
+  flex: none;
+  line-height: 0;
+}
+.masthead__turtles img {
+  display: block;
+  width: 3.25rem;
+  height: auto;
+}
+@media (prefers-color-scheme: dark) {
+  /* The drawing is dark ink on a transparent ground; flip it to chalk. */
+  .masthead__turtles img {
+    filter: invert(1);
+  }
+}
+.masthead__text {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+}
+.masthead__title {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.masthead__title a {
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.0625rem;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.nav a:hover,
+.nav a[aria-current] {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+}
+
+/* Landing page: the drawing gets the room. */
+.masthead--home {
+  align-items: flex-end;
+  gap: 2rem;
+  padding: 3.5rem 0 2.25rem;
+}
+.masthead--home .masthead__turtles img {
+  width: clamp(9.5rem, 34vw, 14rem);
+  margin-bottom: -0.5rem;
+}
+.masthead--home .masthead__text {
+  display: block;
+  padding-bottom: 0.5rem;
+}
+.masthead--home .masthead__title {
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.masthead__tagline {
+  margin: 0.75rem 0 1.25rem;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+@media (max-width: 30rem) {
+  .masthead--home {
+    display: block;
+    padding-top: 2rem;
+  }
+  .masthead--home .masthead__turtles img {
+    width: 10.5rem;
+    margin: 0 0 1.25rem -0.5rem;
+  }
+}
+
+/* Post index -------------------------------------------------------- */
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.post-row {
+  display: grid;
+  grid-template-columns: var(--date-col) 1fr;
+  column-gap: 1.25rem;
+  align-items: baseline;
+  margin-bottom: 1.75rem;
+}
+.post-row time {
+  font-size: 1.0625rem;
+}
+.post-row__title {
+  margin: 0;
+  font-size: 1.4375rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.post-row__title a {
+  text-decoration: none;
+}
+.post-row__title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.post-row__summary {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+.more {
+  margin: 2.5rem 0 0 calc(var(--date-col) + 1.25rem);
+}
+
+@media (max-width: 30rem) {
+  .post-row {
+    display: block;
+  }
+  .post-row time {
+    display: block;
+    margin-bottom: 0.125rem;
+  }
+  .more {
+    margin-left: 0;
+  }
+}
+
+/* Archive ----------------------------------------------------------- */
+
+.year h2 {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  margin: 2.25rem 0 0.5rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid var(--rule);
+}
+.archive {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.archive li {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  column-gap: 1rem;
+  align-items: baseline;
+  padding: 0.3rem 0;
+}
+.archive a {
+  text-decoration: none;
+}
+.archive a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* Article ----------------------------------------------------------- */
+
+.article__header {
+  margin-bottom: 2rem;
+}
+.article__header time {
+  display: block;
+  margin-bottom: 0.375rem;
+}
+.article__header h1 {
+  font-size: clamp(2rem, 6vw, 2.625rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+.article__summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.3125rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+.prose li {
+  margin-bottom: 0.375rem;
+}
+.prose li::marker {
+  color: var(--muted);
+}
+.prose blockquote {
+  margin: 1.75rem 0;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+}
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+.prose hr {
+  width: 4rem;
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.75rem 0;
+  border-collapse: collapse;
+  font-size: 1.0625rem;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.prose th,
+.prose td {
+  padding: 0.4rem 1.25rem 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 600;
+  border-bottom-color: var(--muted);
+}
+
+code,
+pre {
+  font-family: var(--mono);
+  font-size: 0.8em;
+}
+:not(pre) > code {
+  padding: 0.1em 0.3em;
+  background: var(--code-bg);
+  border-radius: 3px;
+}
+pre {
+  margin: 1.75rem 0;
+  padding: 1rem 1.125rem;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  tab-size: 2;
+}
+pre code {
+  font-size: inherit;
+}
+
+/* Syntax highlighting (Hugo's Chroma classes), kept to three voices. */
+.chroma .c,
+.chroma .c1,
+.chroma .cm,
+.chroma .ch,
+.chroma .cs {
+  color: var(--muted);
+  font-style: italic;
+}
+.chroma .k,
+.chroma .kd,
+.chroma .kn,
+.chroma .kr,
+.chroma .kc,
+.chroma .kt,
+.chroma .nt {
+  font-weight: 600;
+}
+.chroma .s,
+.chroma .s1,
+.chroma .s2,
+.chroma .sb,
+.chroma .sc,
+.chroma .se,
+.chroma .m,
+.chroma .mi,
+.chroma .mf,
+.chroma .l {
+  color: var(--accent);
+}
+
+.pager {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+.pager p {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  column-gap: 1rem;
+  margin: 0;
+  padding: 0.2rem 0;
+}
+.pager span {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Footer ------------------------------------------------------------ */
+
+.footer {
+  margin-top: 4.5rem;
+  padding: 1.25rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 1.0625rem;
+}
+.footer p {
+  margin: 0 0 0.375rem;
+}

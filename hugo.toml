@@ -1,0 +1,38 @@
+baseURL = "https://turtlesdown.dev/"
+locale = "en-US"
+title = "Turtles Down"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  author = "Gunnar Aasen"
+  tagline = "Notes on product, infrastructure, and the layers underneath."
+  description = "Gunnar Aasen's blog about product management, cloud infrastructure, and data platforms."
+  homepage = "https://gunnaraasen.com/"
+  github = "https://github.com/gunnaraasen/"
+  linkedin = "https://linkedin.com/in/gunnaraasen/"
+  # How many posts the landing page lists before pointing to the archive.
+  recentPosts = 10
+
+[permalinks.page]
+  posts = "/posts/:contentbasename/"
+
+[[menus.main]]
+  name = "blog"
+  pageRef = "/"
+  weight = 10
+[[menus.main]]
+  name = "archive"
+  pageRef = "/posts"
+  weight = 20
+[[menus.main]]
+  name = "about"
+  pageRef = "/about"
+  weight = 30
+
+[outputs]
+  home = ["html", "rss"]
+  section = ["html"]
+
+[markup.highlight]
+  noClasses = false

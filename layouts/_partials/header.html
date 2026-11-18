@@ -1,0 +1,23 @@
+<header class="masthead{{ if .IsHome }} masthead--home{{ end }}">
+  <a class="masthead__turtles" href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} aria-hidden="true" tabindex="-1"{{ end }}>
+    <img src="{{ "img/turtles.webp" | relURL }}" width="692" height="676" alt="{{ if not .IsHome }}{{ site.Title }} home{{ end }}">
+  </a>
+  <div class="masthead__text">
+    {{- if .IsHome }}
+    <h1 class="masthead__title">{{ site.Title }}</h1>
+    <p class="masthead__tagline">{{ site.Params.tagline }}</p>
+    {{- else }}
+    <p class="masthead__title"><a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a></p>
+    {{- end }}
+    <nav aria-label="Site">
+      <ul class="nav">
+        {{- $current := . }}
+        {{- range site.Menus.main }}
+        {{- $exact := $current.IsMenuCurrent .Menu . }}
+        {{- $inArchive := and (eq .Name "archive") (eq $current.Section "posts") }}
+        <li><a href="{{ .URL }}"{{ if $exact }} aria-current="page"{{ else if $inArchive }} aria-current="true"{{ end }}>{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,9 @@
+<footer class="footer">
+  <p>
+    Written by <a href="{{ site.Params.homepage }}">{{ site.Params.author }}</a>.
+    Find me on <a href="{{ site.Params.github }}">GitHub</a> and
+    <a href="{{ site.Params.linkedin }}">LinkedIn</a>, or subscribe by
+    {{ with site.Home.OutputFormats.Get "rss" }}<a href="{{ .RelPermalink }}">RSS</a>{{ end }}.
+  </p>
+  <p>&copy; {{ now.Year }} {{ site.Params.author }}. It&rsquo;s turtles all the way down.</p>
+</footer>

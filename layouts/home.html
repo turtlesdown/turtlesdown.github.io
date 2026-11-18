@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Section" "posts" }}
+{{- $limit := site.Params.recentPosts | default 10 }}
+<h2 class="visually-hidden">Recent posts</h2>
+<ol class="posts">
+  {{- range first $limit $posts }}
+  <li class="post-row">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format "Jan 2, 2006" }}</time>
+    <div>
+      <h3 class="post-row__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      {{- with .Description }}
+      <p class="post-row__summary">{{ . }}</p>
+      {{- end }}
+    </div>
+  </li>
+  {{- end }}
+</ol>
+{{- if gt (len $posts) $limit }}
+<p class="more"><a href="{{ "posts/" | relURL }}">See all {{ len $posts }} posts in the archive</a></p>
+{{- end }}
+{{ end }}
